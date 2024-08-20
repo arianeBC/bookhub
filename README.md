@@ -1,1 +1,3 @@
 # bookhub
+## Description
+Book Social Network is a full-stack application designed for book lovers to manage their collections and connect with a community of fellow readers. Users can register, securely validate their emails, and manage their book collections with features for creating, updating, sharing, and archiving books. The platform also supports book borrowing, with availability checks, return processing, and return approval. Security is a priority, with JWT tokens safeguarding user sessions. The application follows best practices in REST API design, with a backend powered by Spring Boot 3 and Spring Security 6, and a frontend built with Angular, styled using Bootstrap.
