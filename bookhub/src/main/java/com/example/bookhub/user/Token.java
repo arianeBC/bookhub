@@ -17,6 +17,7 @@ public class Token {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private String tokenValue;
 
     private LocalDateTime createdAt;
