@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5434/bookhub
+    url: jdbc:postgresql://localhost:5432/bookhub
     username: username
     password: password
     driver-class-name: org.postgresql.Driver
@@ -28,9 +28,13 @@ spring:
         connectiontimeout: 5000
         timeout: 3000
         writetimeout: 5000
-
 application:
   security:
     jwt:
       secret-key: U2VjcmV0S2V5MTIzNDU2Nzg=
       expiration: 8640000
+  mailing:
+    frontend:
+      activation.url: http://localhost:4200/activate-account
+server:
+  port: 8088

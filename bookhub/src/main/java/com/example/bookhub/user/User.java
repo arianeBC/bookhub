@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -32,18 +31,14 @@ public class User implements UserDetails, Principal {
     private Long id;
 
     private String firstName;
-
     private String lastName;
-
     private LocalDate birthday;
 
     @Column(unique = true)
     private String email;
 
     private String password;
-
     private boolean accountLocked;
-
     private boolean enabled;
 
     @CreatedDate
@@ -66,7 +61,7 @@ public class User implements UserDetails, Principal {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -99,7 +94,7 @@ public class User implements UserDetails, Principal {
         return UserDetails.super.isEnabled();
     }
 
-    private String getFullName() {
+    public String getFullName() {
         return firstName + " " + lastName;
     }
 }
