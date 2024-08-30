@@ -1,7 +1,8 @@
-package com.example.bookhub.feedback;
+package com.example.bookhub.history;
 
 import com.example.bookhub.book.Book;
 import com.example.bookhub.common.BaseEntity;
+import com.example.bookhub.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,12 +18,16 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Feedback extends BaseEntity {
+public class BookTransactionHistory extends BaseEntity {
 
-    private Double rating;
-    private String comment;
-    
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
+
+    private boolean returned;
+    private boolean returnedApproved;
 }
