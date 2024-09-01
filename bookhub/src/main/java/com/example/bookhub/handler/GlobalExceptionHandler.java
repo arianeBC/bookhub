@@ -1,5 +1,6 @@
 package com.example.bookhub.handler;
 
+import com.example.bookhub.exception.OperationNotPermittedException;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,7 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.example.bookhub.handler.BusinessErrorCodes.*;
-import static com.example.bookhub.handler.BusinessErrorCodes.BAD_CREDENTIALS;
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
@@ -59,6 +59,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleException(MessagingException e) {
         return ResponseEntity
                 .status(INTERNAL_SERVER_ERROR)
+                .body(ExceptionResponse.builder()
+                        .error(e.getMessage())
+                        .build()
+                );
+    }
+
+    @ExceptionHandler(OperationNotPermittedException.class)
+    public ResponseEntity<ExceptionResponse> handleException(OperationNotPermittedException e) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
                 .body(ExceptionResponse.builder()
                         .error(e.getMessage())
                         .build()

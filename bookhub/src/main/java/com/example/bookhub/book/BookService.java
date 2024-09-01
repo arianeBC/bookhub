@@ -1,6 +1,7 @@
 package com.example.bookhub.book;
 
 import com.example.bookhub.common.PageResponse;
+import com.example.bookhub.exception.OperationNotPermittedException;
 import com.example.bookhub.history.BookTransactionHistory;
 import com.example.bookhub.history.BookTransactionHistoryRepository;
 import com.example.bookhub.user.User;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.example.bookhub.book.BookSpecification.withOwnerId;
 
@@ -108,5 +110,29 @@ public class BookService {
                 borrowedBooks.isFirst(),
                 borrowedBooks.isLast()
         );
+    }
+
+    public Long updateAvailableStatus(Long bookId, Authentication connectedUser) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId));
+        User user = ((User) connectedUser.getPrincipal());
+        if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+            throw new OperationNotPermittedException("Permission Denied: You are not authorized to update the available status of books owned by others.");
+        }
+        book.setAvailable(!book.isAvailable());
+        bookRepository.save(book);
+        return bookId;
+    }
+
+    public Long updateArchivedStatus(Long bookId, Authentication connectedUser) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId));
+        User user = ((User) connectedUser.getPrincipal());
+        if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+            throw new OperationNotPermittedException("Permission Denied: You are not authorized to update the archived status of books owned by others.");
+        }
+        book.setArchived(!book.isArchived());
+        bookRepository.save(book);
+        return bookId;
     }
 }
