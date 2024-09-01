@@ -37,7 +37,7 @@ public class BookService {
     public BookResponse findById(long bookId) {
         return bookRepository.findById(bookId)
                 .map(bookMapper::toBookResponse)
-                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId));
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId + "."));
     }
 
     public PageResponse<BookResponse> findAllBooks(int page, int size, Authentication connectedUser) {
@@ -114,7 +114,7 @@ public class BookService {
 
     public Long updateAvailableStatus(Long bookId, Authentication connectedUser) {
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId));
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId + "."));
         User user = ((User) connectedUser.getPrincipal());
         if (!Objects.equals(book.getOwner().getId(), user.getId())) {
             throw new OperationNotPermittedException("Permission Denied: You are not authorized to update the available status of books owned by others.");
@@ -126,7 +126,7 @@ public class BookService {
 
     public Long updateArchivedStatus(Long bookId, Authentication connectedUser) {
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId));
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId + "."));
         User user = ((User) connectedUser.getPrincipal());
         if (!Objects.equals(book.getOwner().getId(), user.getId())) {
             throw new OperationNotPermittedException("Permission Denied: You are not authorized to update the archived status of books owned by others.");
