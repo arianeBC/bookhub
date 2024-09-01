@@ -135,4 +135,47 @@ public class BookService {
         bookRepository.save(book);
         return bookId;
     }
+
+    public Long borrowBook(Long bookId, Authentication connectedUser) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId + "."));
+        if (book.isArchived() || !book.isAvailable()) {
+            throw new OperationNotPermittedException("Action Denied: The requested book cannot be borrowed because it is either archived or currently unavailable.");
+        }
+        User user = ((User) connectedUser.getPrincipal());
+        if (Objects.equals(book.getOwner().getId(), user.getId())) {
+            throw new OperationNotPermittedException("Action Denied: You cannot borrow a book that you own.");
+        }
+        final boolean isCurrentlyBorrowedByUser = bookTransactionHistoryRepository.isCurrentlyBorrowedByUser(bookId, user.getId());
+        if (isCurrentlyBorrowedByUser) {
+            throw new OperationNotPermittedException("Action Denied: You cannot borrow a book that you are currently borrowing.");
+        }
+        final boolean isCurrentlyBorrowedByOtherUser = bookTransactionHistoryRepository.isCurrentlyBorrowed(bookId);
+        if (isCurrentlyBorrowedByOtherUser) {
+            throw new OperationNotPermittedException("Unavailable: The requested book is already borrowed.");
+        }
+        BookTransactionHistory bookTransactionHistory = BookTransactionHistory.builder()
+                .user(user)
+                .book(book)
+                .returned(false)
+                .returnedApproved(false)
+                .build();
+        return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
+    }
+
+    public Long returnBorrowedBook(Long bookId, Authentication connectedUser) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId + "."));
+        if (book.isArchived() || !book.isAvailable()) {
+            throw new OperationNotPermittedException("Action Denied: The requested book cannot be returned because it is either archived or currently unavailable.");
+        }
+        User user = ((User) connectedUser.getPrincipal());
+        if (Objects.equals(book.getOwner().getId(), user.getId())) {
+            throw new OperationNotPermittedException("Action Denied: You cannot return a book that you own.");
+        }
+        BookTransactionHistory bookTransactionHistory = bookTransactionHistoryRepository.findByBookIdAndUserId(bookId, user.getId())
+                .orElseThrow(() -> new OperationNotPermittedException("Action Denied: You cannot return a book that you did not borrow."));
+        bookTransactionHistory.setReturned(true);
+        return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
+    }
 }
