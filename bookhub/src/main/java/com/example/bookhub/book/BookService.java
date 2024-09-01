@@ -178,4 +178,20 @@ public class BookService {
         bookTransactionHistory.setReturned(true);
         return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
     }
+
+    public Long approveBookReturn(Long bookId, Authentication connectedUser) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId + "."));
+        if (book.isArchived() || !book.isAvailable()) {
+            throw new OperationNotPermittedException("Action Denied: The requested book cannot be returned because it is either archived or currently unavailable.");
+        }
+        User user = ((User) connectedUser.getPrincipal());
+        if (Objects.equals(book.getOwner().getId(), user.getId())) {
+            throw new OperationNotPermittedException("Action Denied: You cannot return a book that you own.");
+        }
+        BookTransactionHistory bookTransactionHistory = bookTransactionHistoryRepository.findByBookIdAndOwnerId(bookId, user.getId())
+                .orElseThrow(() -> new OperationNotPermittedException("Action Denied: The book has not been returned yet."));
+        bookTransactionHistory.setReturnedApproved(true);
+        return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
+    }
 }
