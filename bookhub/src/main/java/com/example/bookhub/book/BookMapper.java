@@ -1,5 +1,6 @@
 package com.example.bookhub.book;
 
+import com.example.bookhub.history.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,6 +29,17 @@ public class BookMapper {
                 .rating(book.getRate())
                 .available(book.isAvailable())
                 .archived(book.isArchived())
+                .build();
+    }
+
+    public BorrowedBookResponse toBorrowedBookResponse(BookTransactionHistory bookTransactionHistory) {
+        return BorrowedBookResponse.builder()
+                .id(bookTransactionHistory.getBook().getId())
+                .title(bookTransactionHistory.getBook().getTitle())
+                .author(bookTransactionHistory.getBook().getAuthor())
+                .isbn(bookTransactionHistory.getBook().getIsbn())
+                .returned(bookTransactionHistory.isReturned())
+                .returnedApproved(bookTransactionHistory.isReturnedApproved())
                 .build();
     }
 }
