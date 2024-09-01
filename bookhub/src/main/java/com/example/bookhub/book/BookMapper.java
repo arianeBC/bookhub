@@ -1,5 +1,6 @@
 package com.example.bookhub.book;
 
+import com.example.bookhub.file.FileUtils;
 import com.example.bookhub.history.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class BookMapper {
                 .isbn(book.getIsbn())
                 .description(book.getDescription())
                 .owner(book.getOwner().getFullName())
-//                .coverImage(book.getCoverImage())
+                .coverImage(FileUtils.readFileFromLocation(book.getCoverImage()))
                 .rating(book.getRate())
                 .available(book.isAvailable())
                 .archived(book.isArchived())
