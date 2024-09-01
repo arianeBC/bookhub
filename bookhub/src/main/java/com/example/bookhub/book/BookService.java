@@ -2,6 +2,7 @@ package com.example.bookhub.book;
 
 import com.example.bookhub.common.PageResponse;
 import com.example.bookhub.exception.OperationNotPermittedException;
+import com.example.bookhub.file.FileStorageService;
 import com.example.bookhub.history.BookTransactionHistory;
 import com.example.bookhub.history.BookTransactionHistoryRepository;
 import com.example.bookhub.user.User;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +28,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
     private final BookMapper bookMapper;
+    private final FileStorageService fileStorageService;
 
     public Long save(BookRequest bookRequest, Authentication connectedUser) {
         User user = ((User) connectedUser.getPrincipal());
@@ -193,5 +196,14 @@ public class BookService {
                 .orElseThrow(() -> new OperationNotPermittedException("Action Denied: The book has not been returned yet."));
         bookTransactionHistory.setReturnedApproved(true);
         return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
+    }
+
+    public void uploadBookCoverImage(MultipartFile sourceFile, Authentication connectedUser, Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId + "."));
+        User user = ((User) connectedUser.getPrincipal());
+        var coverImage = fileStorageService.saveFile(sourceFile, user.getId());
+        book.setCoverImage(coverImage);
+        bookRepository.save(book);
     }
 }

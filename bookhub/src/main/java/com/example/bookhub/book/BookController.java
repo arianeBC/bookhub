@@ -1,12 +1,14 @@
 package com.example.bookhub.book;
 
 import com.example.bookhub.common.PageResponse;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("books")
@@ -21,6 +23,16 @@ public class BookController {
             @Valid @RequestBody BookRequest request,
             Authentication connectedUser) {
         return ResponseEntity.ok(bookService.save(request, connectedUser));
+    }
+
+    @PostMapping(value = "/cover/{book-id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadBookCoverImage(
+            @PathVariable("book-id") Long bookId,
+            @Parameter()
+            @RequestPart MultipartFile sourceFile,
+            Authentication connectedUser) {
+        bookService.uploadBookCoverImage(sourceFile, connectedUser, bookId);
+        return ResponseEntity.accepted().build();
     }
 
     @GetMapping("{book-id}")
