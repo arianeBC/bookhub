@@ -18,23 +18,6 @@ public class BookController {
 
     private final BookService bookService;
 
-    @PostMapping
-    public ResponseEntity<Long> savedBook(
-            @Valid @RequestBody BookRequest request,
-            Authentication connectedUser) {
-        return ResponseEntity.ok(bookService.save(request, connectedUser));
-    }
-
-    @PostMapping(value = "/cover/{book-id}", consumes = "multipart/form-data")
-    public ResponseEntity<?> uploadBookCoverImage(
-            @PathVariable("book-id") Long bookId,
-            @Parameter()
-            @RequestPart MultipartFile sourceFile,
-            Authentication connectedUser) {
-        bookService.uploadBookCoverImage(sourceFile, connectedUser, bookId);
-        return ResponseEntity.accepted().build();
-    }
-
     @GetMapping("{book-id}")
     public ResponseEntity<BookResponse> getBook(
             @PathVariable("book-id") long bookId
@@ -78,6 +61,31 @@ public class BookController {
         return ResponseEntity.ok(bookService.findAllReturnedBooks(page, size, connectedUser));
     }
 
+    @PostMapping
+    public ResponseEntity<Long> savedBook(
+            @Valid @RequestBody BookRequest bookRequest,
+            Authentication connectedUser) {
+        return ResponseEntity.ok(bookService.save(bookRequest, connectedUser));
+    }
+
+    @PostMapping(value = "/cover/{book-id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadBookCoverImage(
+            @PathVariable("book-id") Long bookId,
+            @Parameter()
+            @RequestPart MultipartFile sourceFile,
+            Authentication connectedUser) {
+        bookService.uploadBookCoverImage(sourceFile, connectedUser, bookId);
+        return ResponseEntity.accepted().build();
+    }
+
+    @PostMapping("/borrow/{book-id}")
+    public ResponseEntity<Long> borrowBook(
+            @PathVariable("book-id") Long bookId,
+            Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(bookService.borrowBook(bookId, connectedUser));
+    }
+
     @PatchMapping("/available/{book-id}")
     public ResponseEntity<Long> updateAvailableStatus(
             @PathVariable("book-id") Long bookId,
@@ -92,14 +100,6 @@ public class BookController {
             Authentication connectedUser
     ) {
         return ResponseEntity.ok(bookService.updateArchivedStatus(bookId, connectedUser));
-    }
-
-    @PostMapping("/borrow/{book-id}")
-    public ResponseEntity<Long> borrowBook(
-            @PathVariable("book-id") Long bookId,
-            Authentication connectedUser
-    ) {
-        return ResponseEntity.ok(bookService.borrowBook(bookId, connectedUser));
     }
 
     @PatchMapping("/borrow/return/{book-id}")
