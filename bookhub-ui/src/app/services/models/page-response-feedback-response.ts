@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
-import { FeedbackResponse } from '../models/feedback-response';
+import {FeedbackResponse} from './feedback-response';
+
 export interface PageResponseFeedbackResponse {
   content?: Array<FeedbackResponse>;
   first?: boolean;
