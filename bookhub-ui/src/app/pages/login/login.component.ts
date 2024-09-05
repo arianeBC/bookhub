@@ -12,7 +12,7 @@ export class LoginComponent {
 
   authRequest: AuthenticationRequest = {email: '', password: ''};
   errorMessage: Array<String> = [];
-  showPassword = false; // Track password visibility state
+  showPassword = false;
 
   constructor(
     private router: Router,
@@ -21,6 +21,7 @@ export class LoginComponent {
   }
 
   login() {
+    this.showPassword = false
     this.errorMessage = [];
     this.authService.authenticate({
       body: this.authRequest
