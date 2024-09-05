@@ -48,6 +48,6 @@ export class LoginComponent {
   }
 
   togglePasswordVisibility() {
-    this.showPassword = !this.showPassword; // Toggle the state
+    this.showPassword = !this.showPassword;
   }
 }

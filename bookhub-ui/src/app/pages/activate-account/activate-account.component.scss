@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.activate-account-success,
+.activate-account-failed {
+  text-align: center;
+  word-wrap: break-word;
+  white-space: pre-line;
+}
