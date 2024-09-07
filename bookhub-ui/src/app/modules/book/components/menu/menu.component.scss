@@ -1,0 +1,19 @@
+$hover-color: #000087;
+
+li > a {
+  font-size: 0.95rem;
+
+  &:hover {
+    color: $hover-color;
+  }
+
+  &.active {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+.search-btn:hover,
+.logout-btn:hover {
+  color: $hover-color;
+}
