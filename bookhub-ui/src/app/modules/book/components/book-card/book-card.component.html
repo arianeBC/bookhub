@@ -1,0 +1,31 @@
+<div class="card" style="width: 20rem;">
+  <div class="image-container">
+    <img [src]="bookCover" class="card-img-top" alt="{{book.title}}"/>
+  </div>
+  <div class="card-body overflow-auto">
+    <h5 class="card-title fs-6 text-nowrap fw-bold mb-1" *ngIf="book.title as title">
+      {{ title | slice:0:30 }}{{ title.length > 30 ? '...' : '' }}
+    </h5>
+    <h5 class="card-subtitle fs-6 text-secondary mb-1" *ngIf="book.author as author">
+      {{ author | slice:0:30 }}{{ author.length > 30 ? '...' : '' }}
+    </h5>
+    <h6 class="card-subtitle fs-6 text-secondary" *ngIf="book.owner as owner">
+      <i class="fas fa-user"></i> {{ owner | slice:0:25 }}{{ owner.length > 25 ? '...' : '' }}
+    </h6>
+  </div>
+  <div class="card-footer d-flex gap-2 justify-content-between align-items-center">
+    <div class="d-flex gap-2">
+      5 stars
+    </div>
+    <div class="d-flex gap-2" *ngIf="!manage">
+      <i (click)="onShowDetails()" class="fas fa-circle-info"></i>
+      <i (click)="onBorrow()" class="fas fa-list-check"></i>
+      <i (click)="onAddToWaitingList()" class="fas fa-heart text-heart"></i>
+    </div>
+    <div class="d-flex gap-2" *ngIf="manage">
+      <i (click)="onEdit()" class="fas fa-edit text-success"></i>
+      <i (click)="onShare()" class="fas fa-share-nodes text-primary"></i>
+      <i (click)="onArchive()" class="fas fa-archive text-danger"></i>
+    </div>
+  </div>
+</div>
