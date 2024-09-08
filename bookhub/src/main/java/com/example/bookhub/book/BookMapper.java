@@ -12,6 +12,7 @@ public class BookMapper {
                 .id(bookRequest.id())
                 .title(bookRequest.title())
                 .author(bookRequest.author())
+                .isbn(bookRequest.isbn())
                 .description(bookRequest.description())
                 .archived(false)
                 .available(bookRequest.available())
