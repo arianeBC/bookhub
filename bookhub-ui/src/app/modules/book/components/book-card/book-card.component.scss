@@ -1,4 +1,5 @@
 $hover-color: #000087;
+$heart-color: #E62A3B;
 
 i {
   cursor: pointer;
@@ -13,6 +14,10 @@ div {
     max-height: 615px;
     min-height: 615px;
   }
+}
+
+.text-heart:hover {
+  color: $heart-color;
 }
 
 .image-container {

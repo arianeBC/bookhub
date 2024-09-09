@@ -1,0 +1,13 @@
+$star-color: #FED500;
+
+.rating {
+  //
+}
+
+.fa-regular.fa-star {
+  color: gray;
+
+  &:hover {
+    color: $star-color;
+  }
+}

@@ -2,7 +2,7 @@
   <div class="image-container">
     <img [src]="bookCover" class="card-img-top" alt="{{book.title}}"/>
   </div>
-  <div class="card-body overflow-auto">
+  <div class="card-body">
     <h5 class="card-title fs-6 text-nowrap fw-bold mb-1" *ngIf="book.title as title">
       {{ title | slice:0:30 }}{{ title.length > 30 ? '...' : '' }}
     </h5>
@@ -15,12 +15,13 @@
   </div>
   <div class="card-footer d-flex gap-2 justify-content-between align-items-center">
     <div class="d-flex gap-2">
-      5 stars
+      <app-rating [rating]="book.rating || 0"></app-rating>
+      <span class="fw-bold" *ngIf="book.rating || 0 > 0">{{ book.rating }}</span>
     </div>
     <div class="d-flex gap-2" *ngIf="!manage">
       <i (click)="onShowDetails()" class="fas fa-circle-info"></i>
       <i (click)="onBorrow()" class="fas fa-list-check"></i>
-      <i (click)="onAddToWaitingList()" class="fas fa-heart text-heart"></i>
+      <i (click)="onAddToWaitingList()" class="fa-regular fa-heart text-heart"></i>
     </div>
     <div class="d-flex gap-2" *ngIf="manage">
       <i (click)="onEdit()" class="fas fa-edit text-success"></i>
