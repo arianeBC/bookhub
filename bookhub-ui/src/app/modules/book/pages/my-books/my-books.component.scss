@@ -1,0 +1,30 @@
+$hover-color: #000087;
+$active-bg-color: #000000;
+$active-border-color: #000000;
+
+.active {
+  background-color: $active-bg-color;
+  border-color: $active-border-color;
+}
+
+.page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 0, 135, 0.25);
+  outline: 0;
+}
+
+a {
+  border: none;
+  color: $hover-color;
+
+  &:hover {
+    color: $hover-color;
+  }
+
+  &.active {
+    color: white;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
