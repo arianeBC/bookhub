@@ -1,6 +1,5 @@
-$hover-color: #000087;
-$active-bg-color: #000000;
-$active-border-color: #000000;
+@import "variables";
+@import "buttons";
 
 .active {
   background-color: $active-bg-color;

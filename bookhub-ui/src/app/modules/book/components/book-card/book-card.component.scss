@@ -1,5 +1,4 @@
-$hover-color: #000087;
-$heart-color: #E62A3B;
+@import "variables";
 
 i {
   cursor: pointer;
@@ -16,8 +15,8 @@ div {
   }
 }
 
-.text-heart:hover {
-  color: $heart-color;
+.text-danger-custom:hover {
+  color: $text-danger;
 }
 
 .image-container {
