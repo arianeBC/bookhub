@@ -27,16 +27,16 @@ export class ManageBookComponent implements OnInit {
       this.bookService.getBook({
         'book-id': bookId
       }).subscribe({
-        next: (book) => {
+        next: (bookResponse) => {
           this.bookRequest = {
-            id: book.id,
-            title: book.title as string,
-            author: book.author as string,
-            isbn: book.isbn as string,
-            description: book.description as string,
-            available: book.available
+            id: bookResponse.id,
+            title: bookResponse.title as string,
+            author: bookResponse.author as string,
+            isbn: bookResponse.isbn as string,
+            description: bookResponse.description as string,
+            available: bookResponse.available
           };
-          this.selectedCoverImage = 'data:image/jpg;base64,' + book.coverImage;
+          this.selectedCoverImage = 'data:image/jpg;base64,' + bookResponse.coverImage;
         }
       });
     }

@@ -34,3 +34,11 @@ div {
   max-height: 100%;
   object-fit: contain;
 }
+
+.color-blue {
+  color: $hover-color;
+}
+
+.color-red {
+  color: $text-danger;
+}

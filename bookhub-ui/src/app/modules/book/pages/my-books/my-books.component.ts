@@ -69,7 +69,7 @@ export class MyBooksComponent implements OnInit {
   }
 
   editBook(bookResponse: BookResponse) {
-
+    this.router.navigate(['books', 'manage', bookResponse.id])
   }
 
   shareBook(bookResponse: BookResponse) {
@@ -77,6 +77,7 @@ export class MyBooksComponent implements OnInit {
       'book-id': bookResponse.id as number
     }).subscribe({
       next: () => {
+        bookResponse.available = !bookResponse.available;
       },
       error: (err) => {
         console.log(err);
@@ -89,6 +90,7 @@ export class MyBooksComponent implements OnInit {
       'book-id': bookResponse.id as number
     }).subscribe({
       next: () => {
+        bookResponse.archived = !bookResponse.archived
       },
       error: (err) => {
         console.log(err);

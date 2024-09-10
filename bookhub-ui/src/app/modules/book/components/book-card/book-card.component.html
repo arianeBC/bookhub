@@ -1,4 +1,6 @@
-<div class="card" style="width: 20rem;">
+<div
+  class="card"
+  style="width: 20rem;">
   <div class="image-container">
     <img [src]="bookCover" class="card-img-top" alt="{{book.title}}"/>
   </div>
@@ -9,8 +11,11 @@
     <h5 class="card-subtitle fs-6 text-secondary mb-1" *ngIf="book.author as author">
       {{ author | slice:0:30 }}{{ author.length > 30 ? '...' : '' }}
     </h5>
-    <h6 class="card-subtitle fs-6 text-secondary" *ngIf="book.owner as owner">
-      <i class="fas fa-user"></i> {{ owner | slice:0:25 }}{{ owner.length > 25 ? '...' : '' }}
+    <h6 class="card-subtitle fs-6 text-secondary" *ngIf="book.owner && book.available && !book.archived">
+      <i class="fas fa-user"></i> {{ book.owner | slice:0:25 }}{{ book.owner.length > 25 ? '...' : '' }}
+    </h6>
+    <h6 class="card-subtitle fs-6 fw-bold text-danger" *ngIf="!book.available || book.archived">
+      Not available
     </h6>
   </div>
   <div class="card-footer d-flex gap-2 justify-content-between align-items-center">
@@ -25,8 +30,8 @@
     </div>
     <div class="d-flex gap-2" *ngIf="manage">
       <i (click)="onEdit()" class="fas fa-edit"></i>
-      <i (click)="onShare()" class="fas fa-share-nodes"></i>
-      <i (click)="onArchive()" class="fas fa-archive text-danger-custom"></i>
+      <i (click)="onShare()" class="fas fa-share-nodes" [class.color-blue]="!book.available"></i>
+      <i (click)="onArchive()" class="fas fa-archive text-danger-custom" [class.color-red]="book.archived"></i>
     </div>
   </div>
 </div>
