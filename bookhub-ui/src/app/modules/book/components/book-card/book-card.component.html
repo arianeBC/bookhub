@@ -5,17 +5,19 @@
     <img [src]="bookCover" class="card-img-top" alt="{{book.title}}"/>
   </div>
   <div class="card-body">
-    <h5 class="card-title fs-6 text-nowrap fw-bold mb-1" *ngIf="book.title as title">
+    <h5 class="card-title fs-6 text-nowrap fw-bold mb-1" *ngIf="book.title as title" title="{{book.title}}">
       {{ title | slice:0:20 }}{{ title.length > 20 ? '...' : '' }}
     </h5>
-    <h5 class="card-subtitle fs-6 text-secondary mb-1" *ngIf="book.author as author">
+    <h5 class="card-subtitle fs-6 text-secondary mb-1" *ngIf="book.author as author" title="{{book.author}}">
       {{ author | slice:0:20 }}{{ author.length > 20 ? '...' : '' }}
     </h5>
-    <h6 class="card-subtitle fs-6 text-secondary" *ngIf="book.owner && book.available && !book.archived">
+    <h6 class="card-subtitle fs-6 text-secondary" *ngIf="book.owner && book.available && !book.archived"
+        title="Shared by {{book.owner}}">
       <i
         class="fas fa-user"></i> {{ 'Shared by ' + (book.owner | slice:0:20) }}{{ book.owner.length > 20 ? '...' : '' }}
     </h6>
-    <h6 class="card-subtitle fs-6 fw-bold text-danger" *ngIf="!book.available || book.archived">
+    <h6 class="card-subtitle fs-6 fw-bold text-danger" *ngIf="!book.available || book.archived"
+        title="{{ book.archived ? 'Archived' : 'Not available' }}">
       {{ book.archived ? 'Archived' : 'Not available' }}
     </h6>
   </div>

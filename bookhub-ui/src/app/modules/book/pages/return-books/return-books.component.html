@@ -1,4 +1,4 @@
-<h3 class="mt-4 mx-4 fw-bold">My returned books</h3>
+<h3 class="mt-4 mx-4 fw-bold" title="Returned books">Returned books</h3>
 <hr/>
 <div
   *ngIf="message"
@@ -36,9 +36,9 @@
               <i class="fas fa-arrow-left"></i> Validate
             </button>
           </td>
-          <td>{{ book.title }}</td>
-          <td>{{ book.author }}</td>
-          <td>{{ book.isbn }}</td>
+          <td title="{{ book.title }}">{{ book.title }}</td>
+          <td title="{{ book.author }}">{{ book.author }}</td>
+          <td title="{{ book.isbn }}">{{ book.isbn }}</td>
           <td>
             <i class="fas fa-star text-warning"></i>
             <span class="fw-bold"> {{ book.rating }}</span>

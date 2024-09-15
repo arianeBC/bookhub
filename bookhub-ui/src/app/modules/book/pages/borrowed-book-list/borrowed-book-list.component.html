@@ -1,4 +1,4 @@
-<h3 class="mt-4 mx-4 fw-bold">My borrowed books</h3>
+<h3 class="mt-4 mx-4 fw-bold" title="Borrowed books">Borrowed books</h3>
 <hr/>
 <div class="container d-flex justify-content-center flex-column col-12 col-lg-6" *ngIf="selectedBook">
   <h4 class="mt-2 mx-4 fw-bold">Return and share feedback</h4>
@@ -89,9 +89,9 @@
               <i class="fas fa-arrow-left"></i> Return
             </button>
           </td>
-          <td>{{ book.title }}</td>
-          <td>{{ book.author }}</td>
-          <td>{{ book.isbn }}</td>
+          <td title="{{ book.title }}">{{ book.title }}</td>
+          <td title="{{ book.author }}">{{ book.author }}</td>
+          <td title="{{ book.isbn }}">{{ book.isbn }}</td>
           <td>
             <i class="fas fa-star text-warning"></i>
             <span class="fw-bold"> {{ book.rating }}</span>
