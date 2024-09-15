@@ -1,6 +1,5 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BookService} from "../../../../services/services/book.service";
-import {Tooltip} from "bootstrap";
 import {PageResponseBorrowedBookResponse} from "../../../../services/models/page-response-borrowed-book-response";
 import {BorrowedBookResponse} from "../../../../services/models/borrowed-book-response";
 
@@ -9,7 +8,7 @@ import {BorrowedBookResponse} from "../../../../services/models/borrowed-book-re
   templateUrl: './return-books.component.html',
   styleUrl: './return-books.component.scss'
 })
-export class ReturnBooksComponent implements OnInit, AfterViewInit {
+export class ReturnBooksComponent implements OnInit {
   page = 0;
   size = 10;
   pages: any = [];
@@ -24,11 +23,6 @@ export class ReturnBooksComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.findAllReturnedBooks();
-  }
-
-  ngAfterViewInit(): void {
-    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.forEach(tooltipTriggerEl => new Tooltip(tooltipTriggerEl));
   }
 
   private findAllReturnedBooks() {

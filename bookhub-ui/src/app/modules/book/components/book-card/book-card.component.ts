@@ -1,21 +1,15 @@
-import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BookResponse} from "../../../../services/models/book-response";
-import {Tooltip} from "bootstrap";
 
 @Component({
   selector: 'app-book-card',
   templateUrl: './book-card.component.html',
   styleUrl: './book-card.component.scss'
 })
-export class BookCardComponent implements AfterViewInit {
+export class BookCardComponent {
   private _bookCover: string | undefined;
   private _manage = false;
   private _book: BookResponse = {}
-
-  ngAfterViewInit() {
-    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.forEach(tooltipTriggerEl => new Tooltip(tooltipTriggerEl));
-  }
 
   get book(): BookResponse {
     return this._book

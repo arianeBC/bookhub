@@ -85,8 +85,7 @@
           <th scope="row">{{ index + 1 }}</th>
           <td class="text-center">
             <button *ngIf="!book.returned" (click)="returnBorrowedBook(book)" type="submit"
-                    class="btn btn-outline-black" data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="Return this book">
+                    class="btn btn-outline-black" title="Return this book">
               <i class="fas fa-arrow-left"></i> Return
             </button>
           </td>
@@ -98,16 +97,13 @@
             <span class="fw-bold"> {{ book.rating }}</span>
           </td>
           <td class="text-center">
-            <i *ngIf="book.returned" class="fa-solid fa-circle-check text-success" data-bs-toggle="tooltip"
-               data-bs-placement="top"
+            <i *ngIf="book.returned" class="fa-solid fa-circle-check text-success"
                title="The book has been returned"></i>
           </td>
           <td class="text-center">
-            <i *ngIf="book.returnedApproved" class="fa-solid fa-circle-check text-success" data-bs-toggle="tooltip"
-               data-bs-placement="top"
+            <i *ngIf="book.returnedApproved" class="fa-solid fa-circle-check text-success"
                title="The return has been validated"></i>
-            <i *ngIf="book.returned && !book.returnedApproved" class="fas fa-hourglass-half" data-bs-toggle="tooltip"
-               data-bs-placement="top"
+            <i *ngIf="book.returned && !book.returnedApproved" class="fas fa-hourglass-half"
                title="The returned book is awaiting validation"></i>
           </td>
         </tr>
