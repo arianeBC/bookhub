@@ -189,8 +189,8 @@ public class BookService {
             throw new OperationNotPermittedException("Action Denied: The requested book cannot be returned because it is either archived or currently unavailable.");
         }
         User user = ((User) connectedUser.getPrincipal());
-        if (Objects.equals(book.getOwner().getId(), user.getId())) {
-            throw new OperationNotPermittedException("Action Denied: You cannot return a book that you own.");
+        if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+            throw new OperationNotPermittedException("Action Denied: You cannot validate the return of a book that you do not own.");
         }
         BookTransactionHistory bookTransactionHistory = bookTransactionHistoryRepository.findByBookIdAndOwnerId(bookId, user.getId())
                 .orElseThrow(() -> new OperationNotPermittedException("Action Denied: The book has not been returned yet."));

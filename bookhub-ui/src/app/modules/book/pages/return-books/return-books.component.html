@@ -1,69 +1,16 @@
-<h3 class="mt-4 mx-4 fw-bold">My borrowed books</h3>
+<h3 class="mt-4 mx-4 fw-bold">My returned books</h3>
 <hr/>
-<div class="container d-flex justify-content-center flex-column col-12 col-lg-6" *ngIf="selectedBook">
-  <h4 class="mt-2 mx-4 fw-bold">Return and share feedback</h4>
-  <div class="d-flex justify-content-center m-4">
-    <div class="d-flex flex-column col-12">
-      <div class="d-flex pb-1">
-        <div class="col-2">
-          <strong>Title</strong>
-        </div>
-        <div class="col-10">
-          {{ selectedBook.title }}
-        </div>
-      </div>
-      <div class="d-flex pb-1">
-        <div class="col-2">
-          <strong>Author</strong>
-        </div>
-        <div class="col-10">
-          {{ selectedBook.author }}
-        </div>
-      </div>
-      <div class="d-flex pb-1">
-        <div class="col-2">
-          <strong>ISBN</strong>
-        </div>
-        <div class="col-10">
-          {{ selectedBook.isbn }}
-        </div>
-      </div>
-      <div class="d-flex pb-1">
-        <div class="col-2">
-          <strong>Rate</strong>
-        </div>
-        <div class="col-10">
-          {{ selectedBook.rating }}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="d-flex justify-content-center mx-4">
-    <div class="col-12">
-      <form class="row g-3">
-        <div class="col-12">
-          <label for="comment" class="fw-bold pb-1">Leave a review</label>
-          <app-rating
-            [rating]="feedbackRequest.rating || 0"
-            [ratingEnabled]="true"
-            (ratingChange)="feedbackRequest.rating = $event"
-          ></app-rating>
-          <textarea [(ngModel)]="feedbackRequest.comment" rows="4" class="form-control mt-2" id="comment"
-                    name="comment" placeholder="Add a comment (optional)"></textarea>
-        </div>
-        <div class="d-flex justify-content-end gap-2 col-12">
-          <button (click)="returnBook()" type="submit" class="btn btn-outline-black">
-            <i class="fas fa-save"></i> Return the book
-          </button>
-          <a routerLink="/books/my-books" type="submit" class="btn btn-secondary">
-            <i class="fas fa-times"></i> Cancel
-          </a>
-        </div>
-      </form>
-    </div>
-  </div>
+<div
+  *ngIf="message"
+  class="container justify-content-center alert alert-dismissible fade show"
+  [class.alert-danger]="level === 'error'"
+  [class.alert-success]="level === 'success'"
+  role="alert"
+>
+  <p>{{ message }}</p>
+  <button type="button" class="btn-close" (click)="message = ''" aria-label="Close"></button>
 </div>
-<div *ngIf="!selectedBook">
+<div>
   <div class="d-flex justify-content-center m-4">
     <div class="col-12 col-lg-10">
       <table class="table table-hover">
@@ -81,13 +28,13 @@
         </thead>
         <tbody>
         <tr
-          *ngFor="let book of borrowedBooks.content; let index = index">
+          *ngFor="let book of returnedBooks.content; let index = index">
           <th scope="row">{{ index + 1 }}</th>
           <td class="text-center">
-            <button *ngIf="!book.returned" (click)="returnBorrowedBook(book)" type="submit"
+            <button *ngIf="!book.returnedApproved" (click)="approveBookReturn(book)" type="submit"
                     class="btn btn-outline-black" data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="Return this book">
-              <i class="fas fa-arrow-left"></i> Return
+                    title="Validate the return of this book">
+              <i class="fas fa-arrow-left"></i> Validate
             </button>
           </td>
           <td>{{ book.title }}</td>
@@ -105,10 +52,10 @@
           <td class="text-center">
             <i *ngIf="book.returnedApproved" class="fa-solid fa-circle-check text-success" data-bs-toggle="tooltip"
                data-bs-placement="top"
-               title="The return has been validated"></i>
+               title="The return has been approved"></i>
             <i *ngIf="book.returned && !book.returnedApproved" class="fas fa-hourglass-half" data-bs-toggle="tooltip"
                data-bs-placement="top"
-               title="The returned book is awaiting validation"></i>
+               title="The approval for the returned book is still pending"></i>
           </td>
         </tr>
         </tbody>
