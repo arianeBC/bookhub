@@ -12,7 +12,7 @@ import {BookResponse} from "../../../../services/models/book-response";
 export class MyBooksComponent implements OnInit {
   bookResponse: PageResponseBookResponse = {};
   page = 0;
-  size = 8;
+  size = 10;
   pages: any = [];
 
   constructor(

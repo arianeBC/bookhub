@@ -1,0 +1,51 @@
+<div class="sidebar d-flex flex-column p-0 text-white bg-dark"
+     [ngClass]="{'sidebar-collapsed': isSidebarCollapsed}">
+  <button class="btn btn-dark position-absolute top-50 end-0 translate-middle" (click)="toggleSidebar()">
+    <i class="fa-solid"
+       [ngClass]="{'fa-chevron-right': !isSidebarCollapsed, 'fa-chevron-left': isSidebarCollapsed}"></i>
+  </button>
+
+  <div class="d-flex flex-column flex-grow-1">
+    <div class="d-flex justify-content-center align-items-center app-title">
+      <img src="bookhub.svg" width="34" height="34"/>
+      <span class="fs-4 ms-2 fw-bold" [ngClass]="{'d-none': isSidebarCollapsed}">Bookhub</span>
+    </div>
+    <a class="d-flex align-items-center m-3 mb-1 text-white text-decoration-none"
+       [ngClass]="{'d-none': isSidebarCollapsed}">
+      <span class="nav-title-section">Main</span>
+    </a>
+    <hr class="m-0" [ngClass]="{'d-none': isSidebarCollapsed}">
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a class="nav-link text-white" aria-current="page" routerLink="/books">
+          <i class="fa-solid fa-house-chimney"></i>
+          <span class="nav-title" [ngClass]="{'d-none': isSidebarCollapsed}">Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white" routerLink="my-books">
+          <i class="fa-solid fa-book-bookmark"></i>
+          <span class="nav-title" [ngClass]="{'d-none': isSidebarCollapsed}">My books</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white" routerLink="my-returned-books">
+          <i class="fas fa-heart"></i>
+          <span class="nav-title" [ngClass]="{'d-none': isSidebarCollapsed}">My waiting list</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white" routerLink="my-returned-books">
+          <i class="fa-solid fa-rotate-left"></i>
+          <span class="nav-title" [ngClass]="{'d-none': isSidebarCollapsed}">My returned books</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white" routerLink="my-borrowed-books">
+          <i class="fa-solid fa-book-open-reader"></i>
+          <span class="nav-title" [ngClass]="{'d-none': isSidebarCollapsed}">Borrowed books</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

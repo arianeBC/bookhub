@@ -10,8 +10,8 @@ i {
 
 div {
   &.card {
-    max-height: 615px;
-    min-height: 615px;
+    max-height: 450px;
+    min-height: 450px;
   }
 }
 
@@ -21,7 +21,7 @@ div {
 
 .image-container {
   display: flex;
-  height: 30rem;
+  height: 20rem;
   padding: 1rem;
   justify-content: center;
   align-items: center;

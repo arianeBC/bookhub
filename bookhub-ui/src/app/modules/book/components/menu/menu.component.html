@@ -1,68 +1,30 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-bold" href="javascript:void(0)">
-      <img src="bookhub.svg" width="24" height="24"/>
-      Bookhub
-    </a>
-    <button class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item>">
-          <a class="nav-link text-uppercase" aria-current="page" routerLink="/books">
-            Home
-          </a>
-        </li>
-        <li class="nav-item>">
-          <a class="nav-link text-uppercase" aria-current="page" routerLink="my-books">
-            My books
-          </a>
-        </li>
-        <li class="nav-item>">
-          <a class="nav-link text-uppercase" aria-current="page" routerLink="my-waiting-list">
-            <i class="fas fa-heart"></i> My waiting list
-          </a>
-        </li>
-        <li class="nav-item>">
-          <a class="nav-link text-uppercase" aria-current="page" routerLink="my-returned-books">
-            My returned books
-          </a>
-        </li>
-        <li class="nav-item>">
-          <a class="nav-link text-uppercase" aria-current="page" routerLink="my-borrowed-books">
-            Borrowed books
-          </a>
-        </li>
-      </ul>
-      <form class="d-flex gap-2 align-items-center" role="search">
-        <input
-          class="form-control"
-          type="text"
-          placeholder="Find a book"
-          aria-label="Search"
-        />
-        <button class="btn search-btn" type="submit">
-          <i class="fas fa-search"></i>
-        </button>
-        <span>Welcome</span>
-        <span class="text-uppercase fw-bold">Ariane</span>
-        <button
-          class="btn logout-btn"
-          type="button"
-          (click)="logout()"
-          title="Logout"
-        >
-          <i class="fas fa-sign-out-alt"></i>
-        </button>
-      </form>
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm" style="height: 56px">
+
+  <div class="container-fluid mx-4">
+    <form class="d-flex gap-2 align-items-center" role="search">
+      <input
+        class="form-control col-1"
+        type="text"
+        placeholder="Find a book"
+        aria-label="Search"
+      />
+      <button class="btn search-btn" type="submit">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+    <div class="d-flex justify-content-end align-items-center">
+      <div class="dropdown">
+        <a class="d-flex align-items-center text-decoration-none text-black dropdown-toggle" id="dropdownUser1"
+           data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://avatars.githubusercontent.com/u/58924736?v=4" alt="User Avatar" width="32" height="32"
+               class="rounded-circle me-2">
+          <strong class="text-black">Ariane</strong>
+        </a>
+        <ul class="dropdown-menu bg-body-tertiary dropdown-menu-end text-small shadow"
+            aria-labelledby="dropdownUser1">
+          <li><a class="dropdown-item" (click)="logout()">Sign out</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>

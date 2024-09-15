@@ -1,19 +1,19 @@
 <div
   class="card"
-  style="width: 20rem;">
+  style="width: 15rem;">
   <div class="image-container">
     <img [src]="bookCover" class="card-img-top" alt="{{book.title}}"/>
   </div>
   <div class="card-body">
     <h5 class="card-title fs-6 text-nowrap fw-bold mb-1" *ngIf="book.title as title">
-      {{ title | slice:0:30 }}{{ title.length > 30 ? '...' : '' }}
+      {{ title | slice:0:20 }}{{ title.length > 20 ? '...' : '' }}
     </h5>
     <h5 class="card-subtitle fs-6 text-secondary mb-1" *ngIf="book.author as author">
-      {{ author | slice:0:30 }}{{ author.length > 30 ? '...' : '' }}
+      {{ author | slice:0:20 }}{{ author.length > 20 ? '...' : '' }}
     </h5>
     <h6 class="card-subtitle fs-6 text-secondary" *ngIf="book.owner && book.available && !book.archived">
       <i
-        class="fas fa-user"></i> {{ 'Shared by ' + (book.owner | slice:0:25) }}{{ book.owner.length > 25 ? '...' : '' }}
+        class="fas fa-user"></i> {{ 'Shared by ' + (book.owner | slice:0:20) }}{{ book.owner.length > 20 ? '...' : '' }}
     </h6>
     <h6 class="card-subtitle fs-6 fw-bold text-danger" *ngIf="!book.available || book.archived">
       {{ book.archived ? 'Archived' : 'Not available' }}

@@ -1,7 +1,15 @@
-<div class="d-flex flex-column gap-1">
-  <app-menu></app-menu>
+<div class="d-flex">
+  <div>
+    <app-sidebar></app-sidebar>
+  </div>
 
-  <div class="pe-2 ps-2">
-    <router-outlet></router-outlet>
+  <div class="d-flex flex-column flex-grow-1" style="min-height: 100dvh">
+    <div>
+      <app-menu></app-menu>
+    </div>
+
+    <div class="flex-grow-1 p-2">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
