@@ -15,7 +15,7 @@
       <span class="nav-title-section">Main</span>
     </a>
     <hr class="m-0" [ngClass]="{'d-none': isSidebarCollapsed}">
-    <ul class="nav nav-pills flex-column mb-auto">
+    <ul class="nav nav-pills flex-column">
       <li class="nav-item">
         <a class="nav-link text-white" aria-current="page" routerLink="/books" title="Home">
           <i class="fa-solid fa-house-chimney"></i>
@@ -34,10 +34,18 @@
           <span class="nav-title" [ngClass]="{'d-none': isSidebarCollapsed}">My waiting list</span>
         </a>
       </li>
+    </ul>
+
+    <a class="d-flex align-items-center m-3 mb-1 text-white text-decoration-none"
+       [ngClass]="{'d-none': isSidebarCollapsed}">
+      <span class="nav-title-section">Manage</span>
+    </a>
+    <hr class="m-0" [ngClass]="{'d-none': isSidebarCollapsed}">
+    <ul class="nav nav-pills flex-column mb-auto">
       <li>
-        <a class="nav-link text-white" routerLink="my-returned-books" title="Returned books">
+        <a class="nav-link text-white" routerLink="my-returned-books" title="Approve Returns">
           <i class="fa-solid fa-rotate-left"></i>
-          <span class="nav-title" [ngClass]="{'d-none': isSidebarCollapsed}">Returned books</span>
+          <span class="nav-title" [ngClass]="{'d-none': isSidebarCollapsed}">Approve Returns</span>
         </a>
       </li>
       <li>
