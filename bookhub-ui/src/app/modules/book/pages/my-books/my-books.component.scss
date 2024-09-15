@@ -2,21 +2,21 @@
 @import "buttons";
 
 .active {
-  background-color: $active-bg-color;
-  border-color: $active-border-color;
+  background-color: $dark-color;
+  border-color: $dark-color;
 }
 
 .page-link:focus {
-  box-shadow: 0 0 0 0.2rem rgba(0, 0, 135, 0.25);
+  box-shadow: 0 0 0 0.2rem $shadow-color;
   outline: 0;
 }
 
 a {
   border: none;
-  color: $hover-color;
+  color: $primary-color;
 
   &:hover {
-    color: $hover-color;
+    color: $primary-color;
   }
 
   &.active {
