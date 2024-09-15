@@ -1,11 +1,35 @@
-<div class="rating">
-  <ng-container *ngFor="let _ of [].constructor(fullStars); let i = index">
-    <i class="fas fa-star text-warning"></i>
+<div
+  class="rating"
+  data-bs-toggle="tooltip"
+  data-bs-placement="bottom"
+  [attr.title]="!ratingEnabled ? 'Borrow the book to leave a rating!' : null"
+>
+  <ng-container *ngIf="ratingEnabled">
+    <ng-container *ngFor="let star of [].constructor(maxRating); let i = index">
+      <i
+        class="fa-star"
+        [ngClass]="{
+            'fas text-warning': isStarHighlighted(i + 1) || i < fullStars,
+            'fa-regular': !isStarHighlighted(i + 1) && i >= fullStars
+          }"
+        (click)="onStarClick(i + 1)"
+        (mouseenter)="onStarHover(i + 1)"
+        (mouseleave)="onStarLeave()"
+      ></i>
+    </ng-container>
   </ng-container>
-  <ng-container *ngIf="hasHalfStar">
-    <i class="fas fa-star-half-alt text-warning"></i>
-  </ng-container>
-  <ng-container *ngFor="let _ of [].constructor(emptyStars); let i = index">
-    <i class="fa-regular fa-star"></i>
+
+  <ng-container *ngIf="!ratingEnabled">
+    <ng-container *ngFor="let star of [].constructor(fullStars); let i = index">
+      <i class="fas fa-star text-warning"></i>
+    </ng-container>
+
+    <ng-container *ngIf="hasHalfStar">
+      <i class="fas fa-star-half-alt text-warning"></i>
+    </ng-container>
+
+    <ng-container *ngFor="let star of [].constructor(emptyStars); let i = index">
+      <i class="fa-regular fa-star"></i>
+    </ng-container>
   </ng-container>
 </div>

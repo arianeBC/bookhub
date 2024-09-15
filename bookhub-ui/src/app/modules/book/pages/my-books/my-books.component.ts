@@ -69,6 +69,10 @@ export class MyBooksComponent implements OnInit {
   }
 
   editBook(bookResponse: BookResponse) {
+    if (document.querySelector('.tooltip')) {
+      document.querySelector('.tooltip')!!.remove();
+    }
+
     this.router.navigate(['books', 'manage', bookResponse.id])
   }
 
