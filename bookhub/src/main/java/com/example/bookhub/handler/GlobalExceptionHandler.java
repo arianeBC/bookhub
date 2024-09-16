@@ -1,6 +1,6 @@
 package com.example.bookhub.handler;
 
-import com.example.bookhub.exception.OperationNotPermittedException;
+import com.example.bookhub.exception.*;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -95,6 +95,47 @@ public class GlobalExceptionHandler {
                 .status(INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse.builder()
                         .businessErrorMessage("An internal error occurred. Please contact the administrator for assistance.")
+                        .error(e.getMessage())
+                        .build()
+                );
+    }
+
+    @ExceptionHandler(RoleNotInitializedException.class)
+    public ResponseEntity<ExceptionResponse> handleException(RoleNotInitializedException e) {
+        return ResponseEntity
+                .status(INTERNAL_SERVER_ERROR)
+                .body(ExceptionResponse.builder()
+                        .businessErrorMessage("A configuration error occurred: " + e.getMessage())
+                        .error(e.getMessage())
+                        .build()
+                );
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ExceptionResponse> handleException(InvalidTokenException e) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(ExceptionResponse.builder()
+                        .error(e.getMessage())
+                        .build()
+                );
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<ExceptionResponse> handleException(TokenExpiredException e) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(ExceptionResponse.builder()
+                        .error(e.getMessage())
+                        .build()
+                );
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> handleException(EmailAlreadyExistsException e) {
+        return ResponseEntity
+                .status(CONFLICT)
+                .body(ExceptionResponse.builder()
                         .error(e.getMessage())
                         .build()
                 );

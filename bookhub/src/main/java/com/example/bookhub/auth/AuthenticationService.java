@@ -2,6 +2,10 @@ package com.example.bookhub.auth;
 
 import com.example.bookhub.email.EmailService;
 import com.example.bookhub.email.EmailTemplateName;
+import com.example.bookhub.exception.EmailAlreadyExistsException;
+import com.example.bookhub.exception.InvalidTokenException;
+import com.example.bookhub.exception.RoleNotInitializedException;
+import com.example.bookhub.exception.TokenExpiredException;
 import com.example.bookhub.role.RoleRepository;
 import com.example.bookhub.security.JwtService;
 import com.example.bookhub.user.Token;
@@ -41,9 +45,12 @@ public class AuthenticationService {
 
     public void register(@Valid RegistrationRequest registrationRequest) throws MessagingException {
 
-        //TODO add personnalized exception
+        if (userRepository.existsByEmail(registrationRequest.getEmail())) {
+            throw new EmailAlreadyExistsException("Email " + registrationRequest.getEmail() + " is already registered.");
+        }
+
         var userRole = roleRepository.findByName("USER")
-                .orElseThrow(() -> new IllegalStateException("ROLE USER was not initialized."));
+                .orElseThrow(() -> new RoleNotInitializedException("ROLE USER was not initialized."));
         var user = User.builder()
                 .firstName(registrationRequest.getFirstName())
                 .lastName(registrationRequest.getLastName())
@@ -111,11 +118,10 @@ public class AuthenticationService {
     @Transactional
     public void activateAccount(String token) throws MessagingException {
         Token savedToken = tokenRepository.findByTokenValue(token)
-                // TODO Define exception
-                .orElseThrow(() -> new RuntimeException("Invalid token."));
+                .orElseThrow(() -> new InvalidTokenException("The provided token is invalid."));
         if (LocalDateTime.now().isAfter(savedToken.getExpiresAt())) {
             sendValidationEmail(savedToken.getUser());
-            throw new RuntimeException("Activation token has expired. A new token has been sent to the same email address.");
+            throw new TokenExpiredException("Activation token has expired. A new token has been sent to the same email address.");
         }
         var user = userRepository.findById(savedToken.getUser().getId())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
