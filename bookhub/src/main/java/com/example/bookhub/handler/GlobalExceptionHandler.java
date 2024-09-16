@@ -2,6 +2,7 @@ package com.example.bookhub.handler;
 
 import com.example.bookhub.exception.*;
 import jakarta.mail.MessagingException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -16,6 +17,7 @@ import java.util.Set;
 import static com.example.bookhub.handler.BusinessErrorCodes.*;
 import static org.springframework.http.HttpStatus.*;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -89,8 +91,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleException(Exception e) {
-        // Log the exception
-        e.printStackTrace();
+        log.error("An unexpected error occurred", e);
         return ResponseEntity
                 .status(INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse.builder()
