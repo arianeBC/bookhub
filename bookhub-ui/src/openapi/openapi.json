@@ -266,7 +266,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthenticationReponse"
+                  "$ref": "#/components/schemas/AuthenticationResponse"
                 }
               }
             }
@@ -730,7 +730,7 @@
           }
         }
       },
-      "AuthenticationReponse": {
+      "AuthenticationResponse": {
         "type": "object",
         "properties": {
           "token": {

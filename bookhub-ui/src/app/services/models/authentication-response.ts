@@ -1,5 +1,6 @@
 /* tslint:disable */
+
 /* eslint-disable */
-export interface AuthenticationReponse {
+export interface AuthenticationResponse {
   token?: string;
 }

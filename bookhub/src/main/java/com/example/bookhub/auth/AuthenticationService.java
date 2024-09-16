@@ -99,7 +99,7 @@ public class AuthenticationService {
         return codeBuilder.toString();
     }
 
-    public AuthenticationReponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
         var auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -110,7 +110,7 @@ public class AuthenticationService {
         var user = ((User) auth.getPrincipal());
         claims.put("fullname", user.getFullName());
         var jwtToken = jwtService.generateToken(claims, user);
-        return AuthenticationReponse.builder()
+        return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }

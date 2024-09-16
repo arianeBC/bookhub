@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-export type {AuthenticationReponse} from './models/authentication-reponse';
+export type {AuthenticationResponse} from './models/authentication-response';
 export type {AuthenticationRequest} from './models/authentication-request';
 export type {BookRequest} from './models/book-request';
 export type {BookResponse} from './models/book-response';
