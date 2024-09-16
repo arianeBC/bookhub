@@ -30,7 +30,15 @@ export class RegisterComponent {
         this.router.navigate(['activate-account'])
       },
       error: (err) => {
-        this.errorMessage = err.error.validationsErrors;
+        if (err.error) {
+          if (err.error.validationsErrors) {
+            this.errorMessage = err.error.validationsErrors;
+          } else if (err.error.error) {
+            this.errorMessage = [err.error.error];
+          }
+        } else {
+          this.errorMessage = ['An unexpected error occurred. Please try again.'];
+        }
       }
     })
   }

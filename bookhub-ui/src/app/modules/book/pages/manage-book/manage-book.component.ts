@@ -10,9 +10,15 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ManageBookComponent implements OnInit {
   bookRequest: BookRequest = {author: "", description: "", isbn: "", title: ""}
-  errorMessage: Array<string> = [];
   selectedFile: any;
   selectedCoverImage: string | undefined;
+  errorMessage: Array<string> = [];
+  errorMessagesMap: { [key: string]: string } = {
+    '100': 'Title is required.',
+    '101': 'Author is required.',
+    '102': 'ISBN is required.',
+    '103': 'Description is required.'
+  };
 
   constructor(
     private bookService: BookService,
@@ -60,7 +66,11 @@ export class ManageBookComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.errorMessage = err.error.validationsErrors;
+        if (err.error && err.error.validationsErrors) {
+          this.errorMessage = err.error.validationsErrors.map((code: string) => this.errorMessagesMap[code] || 'Unknown error occurred');
+        } else {
+          this.errorMessage = ['An unexpected error occurred. Please try again.'];
+        }
       }
     });
   }

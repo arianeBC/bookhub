@@ -18,6 +18,14 @@ export class BorrowedBookListComponent implements OnInit {
   borrowedBooks: PageResponseBorrowedBookResponse = {};
   selectedBook: BookResponse | undefined = undefined;
   feedbackRequest: FeedbackRequest = {bookId: 0, comment: '', rating: 0};
+  errorMessage: Array<string> = [];
+  errorMessagesMap: { [key: string]: string } = {
+    '200': 'Rating must be positive.',
+    '201': 'Rating must be greater than or equal to 0.',
+    '202': 'Rating must be less than or equal to 5.',
+    '203': 'Comment cannot be empty.',
+    '204': 'Book ID is required.'
+  };
 
   constructor(
     private bookService: BookService,
@@ -87,6 +95,9 @@ export class BorrowedBookListComponent implements OnInit {
         }
         this.selectedBook = undefined;
         this.findAllBorrowedBooks();
+      },
+      error: (err) => {
+        this.handleErrorResponse(err);
       }
     });
   }
@@ -96,7 +107,20 @@ export class BorrowedBookListComponent implements OnInit {
       body: this.feedbackRequest
     }).subscribe({
       next: () => {
+      },
+      error: (err) => {
+        this.handleErrorResponse(err);
       }
     });
+  }
+
+  private handleErrorResponse(err: any) {
+    if (err.error && err.error.validationsErrors) {
+      this.errorMessage = err.error.validationsErrors.map((code: string) =>
+        this.errorMessagesMap[code] || 'Unknown error occurred.'
+      );
+    } else {
+      this.errorMessage = ['An unexpected error occurred. Please try again.'];
+    }
   }
 }
