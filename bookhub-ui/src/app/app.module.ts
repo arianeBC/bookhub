@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {AppComponent} from "./app.component";
-import {BrowserModule, provideClientHydration} from "@angular/platform-browser";
+import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "./app-routing.module";
 import {provideHttpClient, withFetch, withInterceptors} from "@angular/common/http";
 import {LoginComponent} from './pages/login/login.component';
@@ -24,7 +24,6 @@ import {httpTokenInterceptor} from "./services/interceptor/http-token.intercepto
     CodeInputModule
   ],
   providers: [
-    provideClientHydration(),
     provideHttpClient(
       withFetch(),
       withInterceptors([httpTokenInterceptor])
