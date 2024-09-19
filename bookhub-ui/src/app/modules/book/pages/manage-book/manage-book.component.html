@@ -1,0 +1,70 @@
+<h3 class="mt-4 mx-4 fw-bold" title="Add a new book">Add a new book</h3>
+<div
+  *ngIf="errorMessage.length"
+  class="container justify-content-center alert alert-danger alert-dismissible fade show"
+  role="alert"
+>
+  <p class="p-0 m-0" *ngFor="let message of errorMessage">{{ message }}</p>
+  <button type="button" class="btn-close" (click)="errorMessage = []" aria-label="Close"></button>
+</div>
+<hr/>
+<div class="d-flex justify-content-center m-4">
+  <div class="d-flex justify-content-center gap-5 flex-wrap m-4">
+    <div class="col-12 col-md-3">
+      <div class="image-container">
+        <img class="card-img-top" [src]=" selectedCoverImage || 'default-image.png'" alt="...">
+      </div>
+      <div class="mt-2">
+        <input
+          (change)="onFileSelected($event)"
+          class="form-control"
+          type="file"
+          id="formFile"
+          accept="image/*"
+        >
+      </div>
+    </div>
+    <div class="col-12 col-md-8">
+      <form class="row g-3">
+        <div class="col-12">
+          <label for="title" class="form-label">Title</label>
+          <input [(ngModel)]="bookRequest.title" type="text" class="form-control" id="title" name="title"
+                 maxlength="60">
+        </div>
+        <div class="col-md-6">
+          <label for="author" class="form-label">Author name</label>
+          <input [(ngModel)]="bookRequest.author" type="email" class="form-control" id="author" name="author"
+                 maxlength="30">
+        </div>
+        <div class="col-md-6">
+          <label for="isbn" class="form-label">ISBN</label>
+          <input [(ngModel)]="bookRequest.isbn" type="text" class="form-control" id="isbn" name="isbn" maxlength="17">
+        </div>
+        <div class="col-12">
+          <label for="description" class="form-label">Description</label>
+          <textarea [(ngModel)]="bookRequest.description" rows="4" class="form-control" id="description"
+                    maxlength="3000"
+                    name="description"></textarea>
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input [(ngModel)]="bookRequest.available" class="form-check-input" type="checkbox" id="gridCheck"
+                   name="shareable">
+            <label class="form-check-label" for="gridCheck"
+                   title="Allow other users to borrow this book by sharing it">
+              Share this book
+            </label>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end gap-2 col-12">
+          <button (click)="saveBook()" type="submit" class="btn btn-outline-black">
+            <i class="fas fa-save"></i> Save
+          </button>
+          <a routerLink="/books/my-books" type="submit" class="btn btn-secondary">
+            <i class="fas fa-times"></i> Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+@import "variables";
+
+a {
+  font-size: 0.95rem;
+  cursor: pointer;
+
+  &:hover {
+    color: $primary-color;
+  }
+
+  &.active {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+.search-btn:hover {
+  color: $primary-color;
+}

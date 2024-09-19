@@ -1,0 +1,36 @@
+@import "variables";
+
+.active {
+  background-color: $dark-color;
+  border-color: $dark-color;
+}
+
+.page-link:focus {
+  box-shadow: 0 0 0 0.2rem $shadow-color;
+  outline: 0;
+}
+
+li a {
+  border: none;
+  color: $primary-color;
+
+  &:hover {
+    color: $primary-color;
+  }
+
+  &.active {
+    color: white;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+i {
+  cursor: pointer;
+}
+
+.min-width {
+  width: 60px;
+}

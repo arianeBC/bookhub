@@ -1,0 +1,127 @@
+<h3 class="mt-4 mx-4 fw-bold" title="Approve returns">Approve returns</h3>
+<hr/>
+<div
+  *ngIf="message"
+  class="container justify-content-center alert alert-dismissible fade show"
+  [class.alert-danger]="level === 'error'"
+  [class.alert-success]="level === 'success'"
+  role="alert"
+>
+  <p>{{ message }}</p>
+  <button type="button" class="btn-close" (click)="message = ''" aria-label="Close"></button>
+</div>
+<div>
+  <div class="d-flex justify-content-center m-4">
+    <div class="col-12 col-lg-10">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col" class="min-width" title="#">#</th>
+          <th scope="col" class="text-center min-width">Action</th>
+          <th scope="col" title="Title">Title</th>
+          <th scope="col" title="Author">Author</th>
+          <th scope="col" title="ISBN">ISBN</th>
+          <th scope="col" class="text-center min-width" title="Rate">Rate</th>
+          <th scope="col" class="text-center min-width" title="Returned">Returned</th>
+          <th scope="col" class="text-center min-width" title="Returned books must be validated by the owner">
+            Validated
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          *ngFor="let book of returnedBooks.content; let index = index">
+          <th scope="row">{{ index + 1 }}</th>
+          <td class="text-center">
+            <button *ngIf="!book.returnedApproved" (click)="approveBookReturn(book)" type="submit"
+                    class="btn btn-outline-black" title="Validate the return of this book">
+              <i class="fas fa-arrow-left"></i> Validate
+            </button>
+          </td>
+          <td title="{{ book.title }}">{{ book.title }}</td>
+          <td title="{{ book.author }}">{{ book.author }}</td>
+          <td title="{{ book.isbn }}">{{ book.isbn }}</td>
+          <td>
+            <i class="fas fa-star text-warning"></i>
+            <span class="fw-bold"> {{ book.rating }}</span>
+          </td>
+          <td class="text-center">
+            <i *ngIf="book.returned" class="fa-solid fa-circle-check text-success"
+               title="The book has been returned"></i>
+          </td>
+          <td class="text-center">
+            <i *ngIf="book.returnedApproved" class="fa-solid fa-circle-check text-success"
+               title="The return has been approved"></i>
+            <i *ngIf="book.returned && !book.returnedApproved" class="fas fa-hourglass-half"
+               title="The approval for the returned book is still pending"></i>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center mt-3">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <a
+            (click)="goToFirstPage()"
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="First page"
+            [class.disabled]="page == 0"
+          >
+            <i class="fa-solid fa-angles-left"></i>
+          </a>
+        </li>
+        <li class="page-item">
+          <a
+            (click)="goToPreviousPage()"
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="Previous"
+            [class.disabled]="page == 0"
+          >
+            <i class="fa-solid fa-angle-left"></i>
+          </a>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let pageIndex of pages"
+        >
+          <a
+            (click)="goToPage(pageIndex)"
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="Current page"
+            [class.active]="page === pageIndex"
+          >
+            {{ pageIndex + 1 }}
+          </a>
+        </li>
+        <li class="page-item">
+          <a
+            (click)="goToNextPage()"
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="Next"
+            [class.disabled]="isLastPage"
+          >
+            <i class="fa-solid fa-angle-right"></i>
+          </a>
+        </li>
+        <li class="page-item">
+          <a
+            (click)="goToLastPage()"
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="Last page"
+            [class.disabled]="isLastPage"
+          >
+            <i class="fa-solid fa-angles-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

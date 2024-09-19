@@ -1,0 +1,45 @@
+@import "variables";
+
+i {
+  cursor: pointer;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+div {
+  &.card {
+    max-height: 450px;
+    min-height: 450px;
+  }
+}
+
+.text-danger-custom:hover {
+  color: $text-danger;
+}
+
+.image-container {
+  display: flex;
+  height: 20rem;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.card-img-top {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.color-blue {
+  color: $primary-color;
+}
+
+.color-red {
+  color: $text-danger;
+}

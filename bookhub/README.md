@@ -17,9 +17,8 @@ community of fellow readers. Users can register, securely validate their emails,
 features for creating, updating, sharing, and archiving books. The platform also supports book borrowing, including
 availability checks, return processing, and approval for returned books.
 
-Security is a priority, with JWT tokens safeguarding user sessions. The application follows best practices in REST API
-design, with a backend powered by **Spring Boot 3** and **Spring Security 6**, and a frontend built with **Angular**,
-styled using **Bootstrap**.
+Security is a priority, with JWT tokens safeguarding user sessions. The backend is powered by **Spring Boot 3** and
+**Spring Security 6**, while the frontend is built with **Angular** and styled using **Bootstrap**.
 
 ## Features
 
@@ -32,20 +31,17 @@ styled using **Bootstrap**.
     - **JWT-based Authentication:** Provides secure login sessions with JSON Web Tokens (JWT) to protect user
       interactions.
 
-
 - **Book Management**
     - **Personal Book Collections:** Users can add, update, and delete books from their personal collections with ease.
     - **Organized Book Archiving:** Archive books to declutter your collection, keeping it well-organized for future
       reference.
     - **Community Sharing:** Share your book collection with other users, making it discoverable within the community.
 
-
 - **Book Borrowing System**
     - **Borrow Requests:** Users can request to borrow books from others in the community.
     - **Book Availability Checks:** System ensures books are available for borrowing before confirming requests.
     - **Borrowing Returns:** Users can return borrowed books and manage the return process seamlessly.
     - **Return Approvals:** Book owners can approve or deny return requests to finalize the borrowing cycle.
-
 
 - **Social Interaction**
     - **Community Connections:** Engage with other users, explore their collections, and build connections based on
@@ -60,22 +56,11 @@ styled using **Bootstrap**.
 - **Java Spring Boot 3**: Provides a robust backend framework to handle REST API requests.
 - **Spring Security 6**: Handles authentication and authorization with JWT tokens.
 - **Hibernate/JPA**: Manages database interactions with entities and repositories.
-- **PostgreSQL**: Database for storing users, books, feedbacks and transactions.
+- **PostgreSQL**: Database for storing users, books, feedbacks, and transactions.
 - **Maven**: Build automation tool that manages dependencies, project structure, and packaging for deployment.
 - **JWT Authentication**: Utilized for secure stateless authentication by encoding and validating tokens for user
   sessions, ensuring secure access to protected API endpoints.
 - **OpenAPI and Swagger UI Documentation**: Provides interactive API documentation.
-
-### Frontend
-
-- **Angular**: Frontend framework for building dynamic, responsive user interfaces.
-- **Component-Based Architecture**: Modular design pattern for reusable and maintainable UI components.
-- **Lazy Loading**: Optimizes application performance by loading modules only when needed.
-- **Authentication Guard**: Manages user access and routes based on authentication status.
-- **OpenAPI Generator for Angular**: Generates TypeScript clients from OpenAPI specifications for seamless integration
-  with backend APIs.
-- **Bootstrap**: CSS framework for styling the application and ensuring a mobile-friendly design.
-- **SCSS**: For custom styling and better control over the design.
 
 ## Setup & Installation
 
@@ -83,8 +68,6 @@ styled using **Bootstrap**.
 
 - Java 17 or higher.
 - Maven 3.8.7 or higher.
-- Node.js (v18 or higher).
-- Angular CLI (v18 or higher).
 - PostgreSQL database.
 
 ### Backend Setup
@@ -112,22 +95,6 @@ styled using **Bootstrap**.
 4. Run the application:
    ```bash
    ./mvn spring-boot:run
-
-### Frontend Setup
-
-1. Navigate to the frontend directory:
-   ```bash
-   cd bookhub/bookhub-ui
-
-2. Install dependencies:
-   ```bash
-   npm install
-
-3. Run the Angular development server:
-   ```bash
-   ng serve
-
-4. Access the app at http://localhost:4200.
 
 ## API Endpoints
 

@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm" style="height: 56px">
+
+  <div class="container-fluid mx-4">
+    <form class="d-flex gap-2 align-items-center" role="search">
+      <input
+        class="form-control col-1"
+        type="text"
+        placeholder="Find a book"
+        aria-label="Search"
+      />
+      <button class="btn search-btn" type="submit" title="Search">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+    <div class="d-flex justify-content-end align-items-center">
+      <div class="dropdown">
+        <a class="d-flex align-items-center text-decoration-none text-black dropdown-toggle" id="dropdownUser1"
+           data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://avatars.githubusercontent.com/u/58924736?v=4" alt="User Avatar" width="32" height="32"
+               class="rounded-circle me-2">
+          <strong class="text-black">Ariane</strong>
+        </a>
+        <ul class="dropdown-menu bg-body-tertiary dropdown-menu-end text-small shadow"
+            aria-labelledby="dropdownUser1">
+          <li><a class="dropdown-item" (click)="logout()" title="Sign out">Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

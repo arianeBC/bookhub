@@ -1,0 +1,59 @@
+@import "variables";
+
+i {
+  font-size: 1.2rem;
+  color: $secondary-color;
+}
+
+a.nav-link.text-white.active {
+  background-color: $secondary-color;
+
+  i {
+    color: white;
+  }
+}
+
+.sidebar {
+  position: relative;
+  width: 280px;
+  height: 100%;
+}
+
+.app-title {
+  height: 56px;
+  background-color: $primary-color;
+}
+
+.nav-title-section {
+  color: $secondary-color;
+  text-transform: uppercase;
+}
+
+.nav-title {
+  margin-left: 1rem;
+}
+
+.nav-link.text-white {
+  border-radius: 0;
+}
+
+.sidebar-collapsed {
+  width: 80px;
+
+  .nav-title, .nav-title-section, .app-title span {
+    display: none;
+  }
+
+  .nav-link {
+    text-align: center;
+  }
+}
+
+.btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+
+
