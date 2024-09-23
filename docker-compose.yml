@@ -20,6 +20,24 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+  bookhub-api:
+    container_name: bookhub-api
+    image: bookhub/bookhub:1.0.1
+    ports:
+      - "8088:8088"
+    networks:
+      - spring-project
+    depends_on:
+      - postgres
+  bookhub-ui:
+    container_name: bookhub-ui
+    image: bookhub/bookhub-ui:1.0.1
+    ports:
+      - "8080:80"
+    networks:
+      - spring-project
+    depends_on:
+      - bookhub-api
 networks:
   spring-project:
     driver: bridge
