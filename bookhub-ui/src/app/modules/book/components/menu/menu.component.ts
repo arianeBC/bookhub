@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {KeycloakService} from "../../../../services/keycloak/keycloak.service";
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +8,13 @@ import {Component} from '@angular/core';
 })
 export class MenuComponent {
 
-  logout() {
-    localStorage.removeItem('token');
-    window.location.reload();
+  constructor(
+    private keycloakService: KeycloakService
+  ) {
+  }
+
+  async logout() {
+    await this.keycloakService.logout();
   }
 
 }
