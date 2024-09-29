@@ -26,7 +26,7 @@ public class BookMapper {
                 .author(book.getAuthor())
                 .isbn(book.getIsbn())
                 .description(book.getDescription())
-                .owner(book.getOwner().getFullName())
+                // TODO .owner(book.getOwner().getFullName())
                 .coverImage(FileUtils.readFileFromLocation(book.getCoverImage()))
                 .rating(book.getRate())
                 .available(book.isAvailable())

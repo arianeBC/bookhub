@@ -4,7 +4,6 @@ import com.example.bookhub.book.Book;
 import com.example.bookhub.book.BookRepository;
 import com.example.bookhub.common.PageResponse;
 import com.example.bookhub.exception.OperationNotPermittedException;
-import com.example.bookhub.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,8 +31,7 @@ public class FeedbackService {
         if (book.isArchived() || !book.isAvailable()) {
             throw new OperationNotPermittedException("Action Denied: Feedback submission is not allowed because the book is either archived or currently unavailable.");
         }
-        User user = ((User) connectedUser.getPrincipal());
-        if (Objects.equals(book.getOwner().getId(), user.getId())) {
+        if (Objects.equals(book.getCreatedBy(), connectedUser.getName())) {
             throw new OperationNotPermittedException("Action Denied: Feedback submission is not allowed for books you own.");
         }
         Feedback feedback = feedbackMapper.toFeedback(feedbackRequest, book);
@@ -41,11 +39,10 @@ public class FeedbackService {
     }
 
     public PageResponse<FeedbackResponse> findAllFeedbacksByBook(long bookId, int page, int size, Authentication connectedUser) {
-        User user = ((User) connectedUser.getPrincipal());
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<Feedback> feedbacks = feedbackRepository.findAllByBookId(bookId, pageable);
         List<FeedbackResponse> feedbackResponses = feedbacks.stream()
-                .map(feedback -> feedbackMapper.toFeedbackResponse(feedback, user.getId()))
+                .map(feedback -> feedbackMapper.toFeedbackResponse(feedback, connectedUser.getName()))
                 .toList();
         return new PageResponse<>(
                 feedbackResponses,

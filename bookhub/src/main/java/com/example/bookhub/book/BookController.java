@@ -65,7 +65,7 @@ public class BookController {
     public ResponseEntity<Long> savedBook(
             @Valid @RequestBody BookRequest bookRequest,
             Authentication connectedUser) {
-        return ResponseEntity.ok(bookService.save(bookRequest, connectedUser));
+        return ResponseEntity.ok(bookService.save(bookRequest));
     }
 
     @PostMapping(value = "/cover/{book-id}", consumes = "multipart/form-data")

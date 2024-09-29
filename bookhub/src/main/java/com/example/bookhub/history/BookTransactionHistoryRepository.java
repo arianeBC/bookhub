@@ -13,11 +13,11 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
             SELECT
             (COUNT(*) > 0) AS isBorrowed
             FROM BookTransactionHistory history
-            WHERE history.user.id = :userId
+            WHERE history.userId = :userId
             AND history.book.id = :bookId
             AND history.returnedApproved = false
             """)
-    boolean isCurrentlyBorrowedByUser(Long bookId, Long userId);
+    boolean isCurrentlyBorrowedByUser(Long bookId, String userId);
 
     @Query("""
             SELECT
@@ -31,35 +31,35 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
     @Query("""
             SELECT history
             FROM BookTransactionHistory history
-            WHERE history.user.id = :userId
+            WHERE history.userId = :userId
             """)
-    Page<BookTransactionHistory> findAllBorrowedBooks(Pageable pageable, Long userId);
+    Page<BookTransactionHistory> findAllBorrowedBooks(Pageable pageable, String userId);
 
     @Query("""
             SELECT history
             FROM BookTransactionHistory history
-            WHERE history.book.owner.id = :userId
+            WHERE history.book.createdBy = :userId
             AND history.returned = true
             """)
-    Page<BookTransactionHistory> findAllReturnedBooks(Pageable pageable, Long userId);
+    Page<BookTransactionHistory> findAllReturnedBooks(Pageable pageable, String userId);
 
     @Query("""
             SELECT transaction
             FROM BookTransactionHistory transaction
-            WHERE transaction.user.id = :userId
+            WHERE transaction.userId = :userId
             AND  transaction.book.id = :bookId
             AND transaction.returned = false
             AND transaction.returnedApproved = false
             """)
-    Optional<BookTransactionHistory> findByBookIdAndUserId(Long bookId, Long userId);
+    Optional<BookTransactionHistory> findByBookIdAndUserId(Long bookId, String userId);
 
     @Query("""
             SELECT transaction
             FROM BookTransactionHistory transaction
-            WHERE transaction.book.owner.id = :ownerId
+            WHERE transaction.book.createdBy = :userId
             AND  transaction.book.id = :bookId
             AND transaction.returned = true
             AND transaction.returnedApproved = false
             """)
-    Optional<BookTransactionHistory> findByBookIdAndOwnerId(Long bookId, Long ownerId);
+    Optional<BookTransactionHistory> findByBookIdAndOwnerId(Long bookId, String userId);
 }
