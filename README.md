@@ -17,9 +17,9 @@ community of fellow readers. Users can register, securely validate their emails,
 features for creating, updating, sharing, and archiving books. The platform also supports book borrowing, including
 availability checks, return processing, and approval for returned books.
 
-Security is a priority, with JWT tokens safeguarding user sessions. The application follows best practices in REST API
-design, with a backend powered by **Spring Boot 3** and **Spring Security 6**, and a frontend built with **Angular**,
-styled using **Bootstrap**.
+Security is a priority, with Keycloak handling user authentication and authorization. The application follows best
+practices in REST API design, with a backend powered by **Spring Boot 3** and **Spring Security 6**, and a frontend
+built with **Angular**, styled using **Bootstrap**.
 
 ## Features
 
@@ -29,8 +29,8 @@ styled using **Bootstrap**.
     - **Email Verification:** Activation of user accounts is completed through a secure email validation process,
       ensuring
       authenticity.
-    - **JWT-based Authentication:** Provides secure login sessions with JSON Web Tokens (JWT) to protect user
-      interactions.
+    - **Keycloak-based Authentication:** Provides secure login sessions and access management via Keycloak, handling
+      both user authentication and authorization.
 
 
 - **Book Management**
@@ -62,8 +62,8 @@ styled using **Bootstrap**.
 - **Hibernate/JPA**: Manages database interactions with entities and repositories.
 - **PostgreSQL**: Database for storing users, books, feedbacks and transactions.
 - **Maven**: Build automation tool that manages dependencies, project structure, and packaging for deployment.
-- **JWT Authentication**: Utilized for secure stateless authentication by encoding and validating tokens for user
-  sessions, ensuring secure access to protected API endpoints.
+- **Keycloak Authentication**: Utilized for secure authentication and authorization, managing user roles and access to
+  protected API endpoints.
 - **OpenAPI and Swagger UI Documentation**: Provides interactive API documentation.
 
 ### Frontend
@@ -86,6 +86,7 @@ styled using **Bootstrap**.
 - Node.js (v18 or higher).
 - Angular CLI (v18 or higher).
 - PostgreSQL database.
+- Keycloak server setup for authentication.
 
 ### Backend Setup
 
@@ -109,7 +110,16 @@ styled using **Bootstrap**.
        password: your_password
        driver-class-name: org.postgresql.Driver
 
-4. Run the application:
+4. Set up Keycloak:
+   Use Docker Compose to deploy a Keycloak server.
+   Once the Keycloak server is running, import the pre-configured realm by navigating to the Keycloak admin console and
+   using the Import feature. You can find the realm configuration in the /keycloak/realm/bookhub.json file.
+   ```bash
+   Keycloak Admin Console > Add Realm > Select File (bookhub.json) > Import
+   ```
+   This will automatically configure the realm, clients, roles, and permissions needed for BookHub.
+
+5. Run the application:
    ```bash
    ./mvn spring-boot:run
 
