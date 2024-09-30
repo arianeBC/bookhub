@@ -16,12 +16,12 @@
       <div class="dropdown">
         <a class="d-flex align-items-center text-decoration-none text-black dropdown-toggle" id="dropdownUser1"
            data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://avatars.githubusercontent.com/u/58924736?v=4" alt="User Avatar" width="32" height="32"
-               class="rounded-circle me-2">
-          <strong class="text-black">Ariane</strong>
+          <i class="fas fa-user-circle fa-2x me-2"></i>
+          <strong class="text-black">{{ username }}</strong>
         </a>
         <ul class="dropdown-menu bg-body-tertiary dropdown-menu-end text-small shadow"
             aria-labelledby="dropdownUser1">
+          <li><a class="dropdown-item" (click)="accountManagement()" title="Sign out">Manage account</a></li>
           <li><a class="dropdown-item" (click)="logout()" title="Sign out">Sign out</a></li>
         </ul>
       </div>

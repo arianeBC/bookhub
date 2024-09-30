@@ -7,14 +7,20 @@ import {KeycloakService} from "../../../../services/keycloak/keycloak.service";
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent {
+  username: string | undefined;
 
   constructor(
     private keycloakService: KeycloakService
   ) {
+    this.username = this.keycloakService.getUsername();
   }
 
   async logout() {
     await this.keycloakService.logout();
+  }
+
+  accountManagement() {
+    this.keycloakService.manageAccount();
   }
 
 }
