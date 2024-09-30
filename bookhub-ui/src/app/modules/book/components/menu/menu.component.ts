@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {KeycloakService} from "../../../../services/keycloak/keycloak.service";
 
 @Component({
   selector: 'app-menu',
@@ -6,10 +7,20 @@ import {Component} from '@angular/core';
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent {
+  username: string | undefined;
 
-  logout() {
-    localStorage.removeItem('token');
-    window.location.reload();
+  constructor(
+    private keycloakService: KeycloakService
+  ) {
+    this.username = this.keycloakService.getUsername();
+  }
+
+  async logout() {
+    await this.keycloakService.logout();
+  }
+
+  accountManagement() {
+    this.keycloakService.manageAccount();
   }
 
 }

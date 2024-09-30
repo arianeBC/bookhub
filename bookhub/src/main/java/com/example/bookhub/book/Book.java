@@ -3,8 +3,10 @@ package com.example.bookhub.book;
 import com.example.bookhub.common.BaseEntity;
 import com.example.bookhub.feedback.Feedback;
 import com.example.bookhub.history.BookTransactionHistory;
-import com.example.bookhub.user.User;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,14 +26,13 @@ public class Book extends BaseEntity {
     private String title;
     private String author;
     private String isbn;
+
+    @Column(length = 500)
     private String description;
+
     private String coverImage;
     private boolean available;
     private boolean archived;
-
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private User owner;
 
     @OneToMany(mappedBy = "book")
     private List<Feedback> feedbacks;

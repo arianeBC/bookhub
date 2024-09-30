@@ -77,7 +77,6 @@ export class ManageBookComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
     if (this.selectedFile) {
       const reader = new FileReader;
       reader.onload = () => {
