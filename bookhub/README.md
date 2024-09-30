@@ -17,8 +17,8 @@ community of fellow readers. Users can register, securely validate their emails,
 features for creating, updating, sharing, and archiving books. The platform also supports book borrowing, including
 availability checks, return processing, and approval for returned books.
 
-Security is a priority, with JWT tokens safeguarding user sessions. The backend is powered by **Spring Boot 3** and
-**Spring Security 6**, while the frontend is built with **Angular** and styled using **Bootstrap**.
+Security is a priority, with Keycloak handling user authentication and authorization. The backend is powered by **Spring
+Boot 3** and **Spring Security 6**, while the frontend is built with **Angular** and styled using **Bootstrap**.
 
 ## Features
 
@@ -28,8 +28,8 @@ Security is a priority, with JWT tokens safeguarding user sessions. The backend 
     - **Email Verification:** Activation of user accounts is completed through a secure email validation process,
       ensuring
       authenticity.
-    - **JWT-based Authentication:** Provides secure login sessions with JSON Web Tokens (JWT) to protect user
-      interactions.
+    - **Keycloak-based Authentication:** Provides secure login sessions and access management via Keycloak, handling
+      both user authentication and authorization.
 
 - **Book Management**
     - **Personal Book Collections:** Users can add, update, and delete books from their personal collections with ease.
@@ -58,8 +58,8 @@ Security is a priority, with JWT tokens safeguarding user sessions. The backend 
 - **Hibernate/JPA**: Manages database interactions with entities and repositories.
 - **PostgreSQL**: Database for storing users, books, feedbacks, and transactions.
 - **Maven**: Build automation tool that manages dependencies, project structure, and packaging for deployment.
-- **JWT Authentication**: Utilized for secure stateless authentication by encoding and validating tokens for user
-  sessions, ensuring secure access to protected API endpoints.
+- **Keycloak Authentication**: Utilized for secure authentication and authorization, managing user roles and access to
+  protected API endpoints.
 - **OpenAPI and Swagger UI Documentation**: Provides interactive API documentation.
 
 ## Setup & Installation
@@ -69,6 +69,7 @@ Security is a priority, with JWT tokens safeguarding user sessions. The backend 
 - Java 17 or higher.
 - Maven 3.8.7 or higher.
 - PostgreSQL database.
+- Keycloak server setup for authentication.
 
 ### Backend Setup
 
@@ -92,7 +93,16 @@ Security is a priority, with JWT tokens safeguarding user sessions. The backend 
        password: your_password
        driver-class-name: org.postgresql.Driver
 
-4. Run the application:
+4. Set up Keycloak:
+   Use Docker Compose to deploy a Keycloak server.
+   Once the Keycloak server is running, import the pre-configured realm by navigating to the Keycloak admin console and
+   using the Import feature. You can find the realm configuration in the /keycloak/realm/bookhub.json file.
+   ```bash
+   Keycloak Admin Console > Add Realm > Select File (bookhub.json) > Import
+   ```
+   This will automatically configure the realm, clients, roles, and permissions needed for BookHub.
+
+5. Run the application:
    ```bash
    ./mvn spring-boot:run
 
