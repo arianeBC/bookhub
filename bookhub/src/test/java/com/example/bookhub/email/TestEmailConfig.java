@@ -1,0 +1,14 @@
+package com.example.bookhub.email;
+
+import org.mockito.Mockito;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+
+@Configuration
+public class TestEmailConfig {
+    @Bean
+    public JavaMailSender javaMailSender() {
+        return Mockito.mock(JavaMailSender.class);
+    }
+}
