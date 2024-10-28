@@ -16,4 +16,19 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
             AND book.createdBy != :userId
             """)
     Page<Book> findAllDisplayableBooks(Pageable pageable, String userId);
+
+    @Query("""
+            SELECT book
+            FROM Book book
+            WHERE book.archived = false
+            AND book.available = true
+            AND book.createdBy != :userId
+            AND (
+                LOWER(book.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
+                LOWER(book.author) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
+                LOWER(book.isbn) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
+                LOWER(book.description) LIKE LOWER(CONCAT('%', :keyword, '%'))
+            )
+            """)
+    Page<Book> searchDisplayableBooks(Pageable pageable, String userId, String keyword);
 }

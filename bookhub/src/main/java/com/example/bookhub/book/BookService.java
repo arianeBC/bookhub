@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,15 +27,22 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
+    private final BookmarkRepository bookmarkRepository;
     private final BookMapper bookMapper;
     private final FileStorageService fileStorageService;
 
     public Long save(BookRequest bookRequest) {
+        if (bookRequest == null) {
+            throw new IllegalArgumentException("Book request cannot be null");
+        }
         Book book = bookMapper.toBook(bookRequest);
         return bookRepository.save(book).getId();
     }
 
     public BookResponse findById(long bookId) {
+        if (bookId <= 0) {
+            throw new IllegalArgumentException("Book ID must be a positive number.");
+        }
         return bookRepository.findById(bookId)
                 .map(bookMapper::toBookResponse)
                 .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId + "."));
@@ -127,6 +135,14 @@ public class BookService {
         }
         book.setArchived(!book.isArchived());
         bookRepository.save(book);
+        if (book.isAvailable()) {
+            List<Bookmark> bookmarks = bookmarkRepository.findAllById(Collections.singleton(bookId));
+            bookmarks.forEach(bookmark -> {
+                // Send notification
+                bookmark.setNotified(true);
+                bookmarkRepository.save(bookmark);
+            });
+        }
         return bookId;
     }
 
@@ -192,5 +208,51 @@ public class BookService {
         var coverImage = fileStorageService.saveFile(sourceFile, connectedUser.getName());
         book.setCoverImage(coverImage);
         bookRepository.save(book);
+    }
+
+    public void deleteBook(long bookId, Authentication connectedUser) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId + "."));
+        if (!Objects.equals(book.getCreatedBy(), connectedUser.getName())) {
+            throw new OperationNotPermittedException("Permission Denied: You are not authorized to delete this book.");
+        }
+        bookRepository.delete(book);
+    }
+
+    public Long saveBookForLater(Long bookId, Authentication connectedUser) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId + "."));
+        boolean alreadySaved = bookmarkRepository.existsByBookIdAndUserId(bookId, connectedUser.getName());
+        if (alreadySaved) {
+            throw new OperationNotPermittedException("You have already saved this book for later.");
+        }
+        Bookmark bookmark = new Bookmark();
+        bookmark.setBook(book);
+        bookmark.setUserId(connectedUser.getName());
+        return bookmarkRepository.save(bookmark).getId();
+    }
+
+    public List<BookResponse> findAllBookmarkedBooks(Authentication connectedUser) {
+        List<Bookmark> bookmarks = bookmarkRepository.findAllByUserId(connectedUser.getName());
+        return bookmarks.stream()
+                .map(bookmark -> bookMapper.toBookResponse(bookmark.getBook()))
+                .toList();
+    }
+
+    public PageResponse<BookResponse> searchDisplayableBooks(int page, int size, Authentication connectedUser, String keyword) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<Book> books = bookRepository.searchDisplayableBooks(pageable, connectedUser.getName(), keyword);
+        List<BookResponse> bookResponses = books.stream()
+                .map(bookMapper::toBookResponse)
+                .toList();
+        return new PageResponse<>(
+                bookResponses,
+                books.getNumber(),
+                books.getSize(),
+                books.getTotalElements(),
+                books.getTotalPages(),
+                books.isFirst(),
+                books.isLast()
+        );
     }
 }

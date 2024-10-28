@@ -2,7 +2,9 @@ package com.example.bookhub.handler;
 
 import com.example.bookhub.exception.*;
 import jakarta.mail.MessagingException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -55,6 +57,15 @@ public class GlobalExceptionHandler {
                         .error(BAD_CREDENTIALS.getMessage())
                         .build()
                 );
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleEntityNotFoundException(EntityNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ExceptionResponse.builder()
+                        .error(e.getMessage())
+                        .build());
     }
 
     @ExceptionHandler(MessagingException.class)

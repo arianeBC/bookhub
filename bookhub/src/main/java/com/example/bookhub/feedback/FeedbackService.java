@@ -39,6 +39,8 @@ public class FeedbackService {
     }
 
     public PageResponse<FeedbackResponse> findAllFeedbacksByBook(long bookId, int page, int size, Authentication connectedUser) {
+        bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId + "."));
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<Feedback> feedbacks = feedbackRepository.findAllByBookId(bookId, pageable);
         List<FeedbackResponse> feedbackResponses = feedbacks.stream()
@@ -53,5 +55,14 @@ public class FeedbackService {
                 feedbacks.isFirst(),
                 feedbacks.isLast()
         );
+    }
+
+    public void deleteFeedback(long feedbackId, Authentication connectedUser) {
+        Feedback feedback = feedbackRepository.findById(feedbackId)
+                .orElseThrow(() -> new EntityNotFoundException("No feedback found with ID:: " + feedbackId + "."));
+        if (!Objects.equals(feedback.getCreatedBy(), connectedUser.getName())) {
+            throw new OperationNotPermittedException("Permission Denied: You are not authorized to delete this feedback.");
+        }
+        feedbackRepository.delete(feedback);
     }
 }
